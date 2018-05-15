@@ -32,7 +32,7 @@ object ControllerSpec : Spek({
 
             it("should return all events") {
                 val response = khttp.get(url = baseUrl +  "events")
-                assert.that(response.statusCode, equalTo(999))
+                assert.that(response.statusCode, equalTo(200))
 
                 println (response.text)
 
