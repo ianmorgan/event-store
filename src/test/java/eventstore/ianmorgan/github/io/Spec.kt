@@ -24,7 +24,7 @@ object CalculatorSpec: Spek({
         }
         on("subtraction") {
             val subtract = calculator.subtract(4, 2)
-            it("should return the result of subtracting the second number from the first number") {
+            it("should return the result of subtracting the second number asMap the first number") {
                 assertEquals(2, subtract)
             }
         }

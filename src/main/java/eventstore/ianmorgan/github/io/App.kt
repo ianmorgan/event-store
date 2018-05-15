@@ -56,6 +56,10 @@ class JavalinApp(private val port: Int) {
 
         }
 
+        // setup my controller
+        val controller = Controller()
+        controller.register(app)
+
         return app
 
     }

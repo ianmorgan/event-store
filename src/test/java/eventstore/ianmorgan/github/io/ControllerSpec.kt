@@ -11,12 +11,12 @@ import org.junit.runner.RunWith
 import  com.natpryce.hamkrest.assertion.assert
 
 @RunWith(JUnitPlatform::class)
-object ContollerSpec : Spek({
+object ControllerSpec : Spek({
 
     lateinit var app: Javalin
-    val url = "http://localhost:8000/"
+    val baseUrl = "http://localhost:8000/"
 
-    describe("the controller") {
+    describe(" controller") {
         beforeGroup {
             app = JavalinApp(8000).init()
             println("app started...")
@@ -26,21 +26,21 @@ object ContollerSpec : Spek({
             // todo
         }
 
-        context("a nested group") {
+        context("GET /events group") {
+            beforeEachTest {}
+            //beforeEachTest {}
 
-            beforeEachTest {
-                //todo
+            it("should return all events") {
+                val response = khttp.get(url = baseUrl +  "events")
+                assert.that(response.statusCode, equalTo(200))
+
+                println (response.text)
+
             }
-
-            beforeEachTest {
-                //todo
-            }
-
-            it("should work") { 1 == 1 }
         }
 
-        it("should return 404 for unknown urls") {
-            val response = khttp.get(url = url + "/missing/url")
+        it("GET /events ") {
+            val response = khttp.get(url = baseUrl + "missing/url")
             assert.that(response.statusCode, equalTo(404))
         }
 
