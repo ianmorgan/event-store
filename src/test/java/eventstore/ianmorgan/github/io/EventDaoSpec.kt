@@ -32,6 +32,12 @@ object EventDaoSpec : Spek({
             assert.that(dao.events[3].type, equalTo("SessionEvent"))
         }
 
+        it ("should filter by type"){
+            val filtered = dao.retrieve(Filter (type = "SimpleEvent"))
+
+            assert.that(filtered.size, equalTo(1))
+            assert.that(filtered[0].type, equalTo("SimpleEvent"))
+        }
 
 
     }
