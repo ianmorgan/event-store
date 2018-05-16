@@ -2,8 +2,7 @@ package eventstore.ianmorgan.github.io
 
 import io.javalin.Javalin
 import io.javalin.ApiBuilder.*
-import io.javalin.translator.json.JavalinJacksonPlugin
-import java.util.*
+
 
 fun main(args: Array<String>) {
     JavalinApp(7000).init()
