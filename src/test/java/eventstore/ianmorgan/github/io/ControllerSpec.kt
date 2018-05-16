@@ -9,6 +9,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
 import  com.natpryce.hamkrest.assertion.assert
+import org.json.JSONObject
 
 @RunWith(JUnitPlatform::class)
 object ControllerSpec : Spek({
@@ -39,9 +40,14 @@ object ControllerSpec : Spek({
             }
         }
 
-        it("GET /events ") {
-            val response = khttp.get(url = baseUrl + "missing/url")
-            assert.that(response.statusCode, equalTo(404))
+        it("POST /events ") {
+
+            val url = baseUrl + "events"
+            val payload = mapOf("some" to "data")
+
+            val response = khttp.post(url, data= JSONObject(payload))
+            //val response = khttp.post(url = baseUrl + "missing/url")
+            assert.that(response.statusCode, equalTo(200))
         }
 
         afterEachTest {

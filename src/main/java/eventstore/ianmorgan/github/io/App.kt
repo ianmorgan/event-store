@@ -2,6 +2,8 @@ package eventstore.ianmorgan.github.io
 
 import io.javalin.Javalin
 import io.javalin.ApiBuilder.*
+import io.javalin.translator.json.JavalinJacksonPlugin
+import java.util.*
 
 fun main(args: Array<String>) {
     JavalinApp(7000).init()
@@ -57,8 +59,20 @@ class JavalinApp(private val port: Int) {
         }
 
         // setup my controller
-        val controller = Controller()
+        val eventDao = EventDao()
+        eventDao.storeEvents(
+            listOf(
+                Event(type = "SimpleEvent"),
+                Event(type = "AggregateEvent", aggregateId = "123"),
+                Event(type = "SessionEvent", sessionId = "#abc"),
+                Event(type = "PayloadEvent", payload = mapOf("name" to "John"))
+            )
+        )
+
+        val controller = Controller(eventDao)
         controller.register(app)
+
+        //JavalinJacksonPlugin.configure()
 
         return app
 

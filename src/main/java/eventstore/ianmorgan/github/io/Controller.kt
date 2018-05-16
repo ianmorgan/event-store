@@ -4,15 +4,17 @@ import io.javalin.ApiBuilder
 import io.javalin.Javalin
 import java.util.*
 
-class Controller {
+class Controller constructor( dao : EventDao ){
+    val theDao = dao
 
     fun register(app : Javalin){
         app.routes {
             ApiBuilder.get("/events") { ctx ->
-                ctx.json(Arrays.asList(
-                    Event.ModelMapper.asMap(Event(type = "SimpleEvent")),
-                    Event.ModelMapper.asMap(Event(type = "AggregateEvent", aggregateId = "123"))
-                ))
+                ctx.json(theDao.events.map { it -> Event.ModelMapper.asMap(it) })
+            }
+
+            ApiBuilder.post("/events") { ctx ->
+               println(ctx.body())
             }
         }
 
