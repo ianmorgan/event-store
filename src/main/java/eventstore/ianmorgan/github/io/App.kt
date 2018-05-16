@@ -57,16 +57,9 @@ class JavalinApp(private val port: Int) {
 
         }
 
-        // setup my controller
+        // setup the  main controller
         val eventDao = EventDao()
-        eventDao.storeEvents(
-            listOf(
-                Event(type = "SimpleEvent"),
-                Event(type = "AggregateEvent", aggregateId = "123"),
-                Event(type = "SessionEvent", sessionId = "#abc"),
-                Event(type = "PayloadEvent", payload = mapOf("name" to "John"))
-            )
-        )
+        eventDao.load("src/test/resources/examples")
 
         val controller = Controller(eventDao)
         controller.register(app)

@@ -32,7 +32,7 @@ This include the 'payload' key which holds any additional data captured with the
 
 ```json
 {
-  "id" : "4778a3ef-a920-4323-bc34-b87aa0bffb41",
+  "id" : "bed6a10c-ab5a-48bc-9129-60842fe10fd9",
   "type" : "PayloadEvent",
   "timestamp": 1509618174218,
   "creator": "test",
@@ -60,7 +60,7 @@ terminology). This is done by adding an 'aggregateId' key.
 
 ```
 {
-  "id" : "4778a3ef-a920-4323-bc34-b87aa0bffb41",
+  "id" : "db857426-4be7-4c1a-99df-10b2ed13dd02",
   "type" : "AggregateEvent",
   "timestamp": 1509618174218,
   "creator": "test",
@@ -78,7 +78,7 @@ batching saves (see below).
 
 ```json
 {
-  "id" : "4778a3ef-a920-4323-bc34-b87aa0bffb41",
+  "id" : "08ec6bfa-b167-43f3-bd26-f2498fa2e291",
   "type" : "SessionEvent",
   "timestamp": 1509618174218,
   "creator": "test",
@@ -132,7 +132,7 @@ Supported parameters are:
 * __pageSize__ - Set a limit on the number of events to return. If this is specified the 'paging' key is also included in the payload - see below
 * __lastId__ - Typically combined with the 'pageSize' to retrieve from a position within the event stream. Note that this exclusive, i.e. the query will return the matching events directly after this event id
 * __type__ - Comma separated list of event types (the 'type' key) to filter on
-* __aggregateId__ - Comma separated list of aggreagteIds to filter on 
+* __aggregateId__ - Comma separated list of aggregateIds  to filter on 
 * __sessionId__ - Comma separated list of sessionIds to filter on 
 
 
