@@ -18,6 +18,5 @@ class Controller constructor(dao: EventDao) {
                 println(ctx.body())
             }
         }
-
     }
 }
