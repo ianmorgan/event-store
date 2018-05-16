@@ -50,7 +50,7 @@ This include the 'payload' key which holds any additional data captured with the
 ```
 
 The content of the 'payload' is entirely application specific but it should not exceed 10k (this is actually a 
-soft limit, the service will start to log warnings if exceeded). The hard limit is around 20K, and is determined by column size 
+soft limit, the service will start to log warnings if exceeded). The hard limit is around 18K, and is determined by column size 
 limitations in MySQL.
 
 ### AggregateEvent 
@@ -93,9 +93,64 @@ The 'sessionId' can be any string up to 255 characters.
 
 ### Saving Events 
 
-Simple POST a JSON array containing one or more events.
+Simply POST a JSON array containing one or more events. All the events are committed as a single batch (so if there 
+is a problem with single one of them, the entire collection is rejected)
 
 ```bash
 curl -H "Content-Type: application/json" -X POST -d '[{ "id" : "4778a3ef-a920-4323-bc34-b87aa0bffb41", "type" : "SimpleEvent", "timestamp": 1509618174218,"creator": "test"}]' http://localhost:7001/events
 ```
+
+Success returns a 200 status code.
+
+Any failure returns a 500 status code.
+
+_TODO_ expand on use of status codes and error messages.
+
+### Retrieving events 
+
+Call GET /events with the following additional parameters.
+
+```bash
+curl -H "Content-Type: application/json" -X GET  http://localhost:7001/events
+```
+
+The return is a JSON array of the events under the 'payload' key. (_TODO_ expand on use of standard keys in the response)
+
+```json
+{ "payload" : [{
+  "id" : "4778a3ef-a920-4323-bc34-b87aa0bffb41",
+  "type" : "SessionEvent",
+  "timestamp": 1509618174218,
+  "creator": "test",
+  "sessionId" : "session#564ghsdgd5bncfz"}
+  ]
+}
+```
+
+Supported parameters are:
+
+* __pageSize__ - Set a limit on the number of events to return. If this is specified the 'paging' key is also included in the payload - see below
+* __lastId__ - Typically combined with the 'pageSize' to retrieve from a position within the event stream. Note that this exclusive, i.e. the query will return the matching events directly after this event id
+* __type__ - Comma separated list of event types (the 'type' key) to filter on
+* __aggregateId__ - Comma separated list of aggreagteIds to filter on 
+* __sessionId__ - Comma separated list of sessionIds to filter on 
+
+
+The 'pageing' key holds information useful for constructing the next query 
+
+```json
+{
+  "more" : true,
+  "size" : 10,
+  "lastId" : "4778a3ef-a920-4323-bc34-b87aa0bffb41"
+}
+```
+
+* __more__ - true indicates that a subsequent query should be made as there _maybe_ more data 
+* __size__ - the number of events returned (the same as the array size)
+* __lastId__ - the id of the last event returned (the last event in the array)
+
+
+
+
 
