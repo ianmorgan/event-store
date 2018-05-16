@@ -1,16 +1,13 @@
 package eventstore.ianmorgan.github.io
 
+import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
-import io.javalin.Javalin
 import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.context
-import org.jetbrains.spek.api.dsl.describe
+import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
-import  com.natpryce.hamkrest.assertion.assert
-import org.jetbrains.spek.api.dsl.given
-import org.json.JSONObject
+import java.util.*
 
 @RunWith(JUnitPlatform::class)
 object EventDaoSpec : Spek({
@@ -25,6 +22,7 @@ object EventDaoSpec : Spek({
 
         it( "should load events from a given directory") {
             dao.load("src/test/resources/examples")
+
             assert.that(dao.events.size, equalTo(4)) // number of example events
             assert.that(dao.events[0].type, equalTo("SimpleEvent"))
             assert.that(dao.events[1].type, equalTo("PayloadEvent"))
@@ -39,6 +37,37 @@ object EventDaoSpec : Spek({
             assert.that(filtered[0].type, equalTo("SimpleEvent"))
         }
 
+        it ("should filter by aggregate id"){
+            val filtered = dao.retrieve(Filter (aggregateId = "123"))
+
+            assert.that(filtered.size, equalTo(1))
+            assert.that(filtered[0].type, equalTo("AggregateEvent"))
+        }
+
+        it ("should filter by session id"){
+            val filtered = dao.retrieve(Filter (sessionId = "session#564ghsdgd5bncfz"))
+
+            assert.that(filtered.size, equalTo(1))
+            assert.that(filtered[0].type, equalTo("SessionEvent"))
+        }
+
+        it ("should only return events after the lastId"){
+            val filtered = dao.retrieve(Filter (lastId = UUID.fromString("bed6a10c-ab5a-48bc-9129-60842fe10fd9")))
+
+            assert.that(filtered.size, equalTo(2))
+            assert.that(filtered[0].type, equalTo("AggregateEvent"))
+            assert.that(filtered[1].type, equalTo("SessionEvent"))
+        }
+
+        it ("should return an empty list if lastId on last event "){
+            val filtered = dao.retrieve(Filter (lastId = UUID.fromString("08ec6bfa-b167-43f3-bd26-f2498fa2e291")))
+            assert.that(filtered.isEmpty(), equalTo(true))
+        }
+
+//        fun loadExamples(){
+//            dao.truncate()
+//            dao.load("src/test/resources/examples")
+//        }
 
     }
 })

@@ -39,18 +39,39 @@ class EventDao {
     }
 
     /**
+     * Drop all events (similar to TRUNCATE TABLE in the SQL world)
+     *
+     */
+    fun truncate() {
+        events.clear()
+    }
+
+    /**
      * Retrieves events with filtering applied
      */
-    fun retrieve(filter : Filter) : List<Event> {
-        return this.events.filter { it -> matchesFilter(it,filter) };
+    fun retrieve(filter: Filter): List<Event> {
+        if (filter.lastId != null) {
+            for (i in events.indices) {
+                if (events[i].id == filter.lastId) {// not the last event
+                    return this.events
+                        .subList(i + 1, events.size)
+                        .filter { it -> matchesFilter(it, filter) }
+
+                }
+            }
+            return Collections.emptyList()
+        } else {
+            return this.events.filter { it -> matchesFilter(it, filter) }
+        }
     }
 
 
-    private fun matchesFilter (ev : Event, filter : Filter) : Boolean {
-        var matched : Boolean
-        matched =  ((filter.type != null) && (ev.type == (filter.type) ))
+    private fun matchesFilter(ev: Event, filter: Filter): Boolean {
+        val matchedType = if (filter.type != null) (ev.type == filter.type) else true
+        val matchedAggregate = if (filter.aggregateId != null) (ev.aggregateId == filter.aggregateId) else true
+        val matchedSession = if (filter.sessionId != null) (ev.sessionId == filter.sessionId) else true
 
-        return matched;
+        return matchedType && matchedAggregate && matchedSession
     }
 }
 
