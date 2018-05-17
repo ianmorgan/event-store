@@ -2,6 +2,7 @@ package eventstore.ianmorgan.github.io
 
 import io.javalin.ApiBuilder
 import io.javalin.Javalin
+import org.json.JSONArray
 
 class Controller constructor(dao: EventDao) {
     private val theDao = dao
@@ -24,8 +25,16 @@ class Controller constructor(dao: EventDao) {
             }
 
             ApiBuilder.post("/events") { ctx ->
+                val json = JSONArray(ctx.body())
 
-                println(ctx.body())
+                // convert to Event objects
+                val events = ArrayList<Event>(json.length())
+                for (i in json.toList().indices ){
+                    events.add(Event.ModelMapper.fromJSON(json.getJSONObject(i)))
+                }
+
+                // and store
+                theDao.storeEvents(events)
             }
         }
     }

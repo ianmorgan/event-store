@@ -8,6 +8,7 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
+import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
@@ -28,7 +29,7 @@ object ControllerSpec : Spek({
             // todo
         }
 
-        context("GET /events group") {
+        context("GET /events specs") {
             beforeEachTest {}
 
             it("should return all events if no filters") {
@@ -120,15 +121,32 @@ object ControllerSpec : Spek({
             }
         }
 
-        it("POST /events ") {
+        context( "POST /events specs") {
+            it("should save new events ") {
 
-            val url = baseUrl + "events"
-            val payload = mapOf("some" to "data")
+                val url = baseUrl + "events"
+                val payload = """
+                [{
+                    "id" : "bd0d452c-6c0c-4954-bb70-8bb49b4818d3",
+                    "type" : "NewEvent",
+                    "timestamp": 1526593840000,
+                    "creator": "test"
+                }]
+"""
+                // save event
+                val response = khttp.post(url, data = JSONArray(payload))
+                assert.that(response.statusCode, equalTo(200))
 
-            val response = khttp.post(url, data = JSONObject(payload))
-            //val response = khttp.post(url = baseUrl + "missing/url")
-            assert.that(response.statusCode, equalTo(200))
+                // check it can be read back
+                val readResponse = khttp.get(url = baseUrl + "events?type=NewEvent")
+                val readCount = readResponse.jsonObject.getJSONObject("payload")
+                    .getJSONArray("events").length()
+
+                assert.that(readCount, equalTo(1))
+            }
+
         }
+
 
         afterEachTest {
             //todo
