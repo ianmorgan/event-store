@@ -17,17 +17,17 @@ object EventDaoSpec : Spek({
         val dao = EventDao()
 
         it("should return an empty list for a fresh DAO ") {
-            assert.that(dao.events.size, equalTo(0))
+            assert.that(dao.retrieve().size, equalTo(0))
         }
 
         it( "should load events from a given directory") {
             dao.load("src/test/resources/examples")
 
-            assert.that(dao.events.size, equalTo(4)) // number of example events
-            assert.that(dao.events[0].type, equalTo("SimpleEvent"))
-            assert.that(dao.events[1].type, equalTo("PayloadEvent"))
-            assert.that(dao.events[2].type, equalTo("AggregateEvent"))
-            assert.that(dao.events[3].type, equalTo("SessionEvent"))
+            assert.that(dao.retrieve().size, equalTo(4)) // number of example events
+            assert.that(dao.retrieve()[0].type, equalTo("SimpleEvent"))
+            assert.that(dao.retrieve()[1].type, equalTo("PayloadEvent"))
+            assert.that(dao.retrieve()[2].type, equalTo("AggregateEvent"))
+            assert.that(dao.retrieve()[3].type, equalTo("SessionEvent"))
         }
 
         it ("should filter by type"){
@@ -62,6 +62,14 @@ object EventDaoSpec : Spek({
         it ("should return an empty list if lastId on last event "){
             val filtered = dao.retrieve(Filter (lastId = UUID.fromString("08ec6bfa-b167-43f3-bd26-f2498fa2e291")))
             assert.that(filtered.isEmpty(), equalTo(true))
+        }
+
+        it ("should limit results by pageSize") {
+            val filtered = dao.retrieve(Filter (pageSize = 2 as Integer))
+
+            assert.that(filtered.size, equalTo(2))
+            assert.that(filtered[0].type, equalTo("SimpleEvent"))
+            assert.that(filtered[1].type, equalTo("PayloadEvent"))
         }
 
 //        fun loadExamples(){
