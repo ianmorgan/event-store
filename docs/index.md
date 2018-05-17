@@ -58,7 +58,7 @@ limitations in MySQL.
 Often it is necessary to easily find the events for a particular entity or aggregate (using [DDD](https://martinfowler.com/bliki/DDD_Aggregate.html) 
 terminology). This is done by adding an 'aggregateId' key.
 
-```
+```json
 {
   "id" : "db857426-4be7-4c1a-99df-10b2ed13dd02",
   "type" : "AggregateEvent",
