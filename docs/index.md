@@ -141,7 +141,7 @@ Supported parameters are:
 * __sessionId__ - Comma separated list of sessionIds to filter on 
 
 
-The additional 'pageing' key under the 'payload' holds information useful for constructing the next query 
+The additional 'paging' key under the 'payload' holds information useful for constructing the next query 
 
 ```json
 {

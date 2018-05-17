@@ -18,7 +18,7 @@ class Controller constructor(dao: EventDao) {
                 val result = HashMap<String, Any>()
                 result["events"] = events.map { it -> Event.ModelMapper.asMap(it) }
                 if (filter.pageSize != null || filter.lastId != null) {
-                    result["pageing"] = buildPaging(events)
+                    result["paging"] = buildPaging(events, filter)
                 }
                 ctx.json(mapOf("payload" to result))
             }
@@ -29,9 +29,9 @@ class Controller constructor(dao: EventDao) {
         }
     }
 
-    private fun buildPaging(events: List<Event>): Map<String, Any> {
-        val size = events.size
+    private fun buildPaging(events: List<Event>, filter: Filter): Map<String, Any> {
         val lastId = events.get(events.size - 1).id.toString()
-        return mapOf("size" to size, "more" to true, "lastId" to lastId)
+        val more = if (filter.pageSize != null) (events.size == filter.pageSize as Int) else false
+        return mapOf("size" to events.size, "more" to more, "lastId" to lastId)
     }
 }
