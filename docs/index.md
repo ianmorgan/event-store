@@ -117,13 +117,18 @@ curl -H "Content-Type: application/json" -X GET  http://localhost:7001/events
 The return is a JSON array of the events under the 'payload' key. (_TODO_ expand on use of standard keys in the response)
 
 ```json
-{ "payload" : [{
-  "id" : "4778a3ef-a920-4323-bc34-b87aa0bffb41",
-  "type" : "SessionEvent",
-  "timestamp": 1509618174218,
-  "creator": "test",
-  "sessionId" : "session#564ghsdgd5bncfz"}
-  ]
+{
+  "payload": {
+    "events": [
+      {
+        "id": "4778a3ef-a920-4323-bc34-b87aa0bffb41",
+        "type": "SessionEvent",
+        "timestamp": 1509618174218,
+        "creator": "test",
+        "sessionId": "session#564ghsdgd5bncfz"
+      }
+    ]
+  }
 }
 ```
 
@@ -136,7 +141,7 @@ Supported parameters are:
 * __sessionId__ - Comma separated list of sessionIds to filter on 
 
 
-The 'pageing' key holds information useful for constructing the next query 
+The additional 'pageing' key under the 'payload' holds information useful for constructing the next query 
 
 ```json
 {
@@ -146,7 +151,7 @@ The 'pageing' key holds information useful for constructing the next query
 }
 ```
 
-* __more__ - true indicates that a subsequent query should be made as there _maybe_ more data 
+* __more__ - true indicates that a subsequent query should be made as there _maybe_ more data
 * __size__ - the number of events returned (the same as the array size)
 * __lastId__ - the id of the last event returned (the last event in the array)
 

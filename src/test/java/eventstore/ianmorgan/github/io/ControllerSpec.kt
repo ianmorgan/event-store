@@ -35,12 +35,12 @@ object ControllerSpec : Spek({
                 assert.that(response.statusCode, equalTo(200))
 
                 val expectedJson = """
-                    {"payload":[
+                    {"payload":{"events":[
                         {"creator":"test","id":"4778a3ef-a920-4323-bc34-b87aa0bffb41","type":"SimpleEvent","timestamp":1509618174218},
                         {"creator":"test","id":"bed6a10c-ab5a-48bc-9129-60842fe10fd9","type":"PayloadEvent","timestamp":1509618174218},
                         {"creator":"test","aggregateId":"123","id":"db857426-4be7-4c1a-99df-10b2ed13dd02","type":"AggregateEvent","timestamp":1509618174218},
                         {"creator":"test","id":"08ec6bfa-b167-43f3-bd26-f2498fa2e291","sessionId":"session#564ghsdgd5bncfz","type":"SessionEvent","timestamp":1509618174218}
-                    ]}
+                    ]}}
 """
                 val actualAsMap = JsonToMap.jsonToMap(response.jsonObject)
                 val expectedAsMap = JsonToMap.jsonToMap(JSONObject(expectedJson))
@@ -53,9 +53,9 @@ object ControllerSpec : Spek({
 
                 // assert JSON
                 val expectedJson = """
-                    {"payload":[
+                    {"payload":{"events":[
                         {"creator":"test","id":"4778a3ef-a920-4323-bc34-b87aa0bffb41","type":"SimpleEvent","timestamp":1509618174218},
-                    ]}
+                    ]}}
 """
                 val actualAsMap = JsonToMap.jsonToMap(response.jsonObject)
                 val expectedAsMap = JsonToMap.jsonToMap(JSONObject(expectedJson))
@@ -68,9 +68,9 @@ object ControllerSpec : Spek({
 
                 // assert JSON
                 val expectedJson = """
-                    {"payload":[
+                    {"payload":{"events":[
                         {"creator":"test","aggregateId":"123","id":"db857426-4be7-4c1a-99df-10b2ed13dd02","type":"AggregateEvent","timestamp":1509618174218},
-                    ]}
+                    ]}}
 """
                 val actualAsMap = JsonToMap.jsonToMap(response.jsonObject)
                 val expectedAsMap = JsonToMap.jsonToMap(JSONObject(expectedJson))
@@ -85,7 +85,7 @@ object ControllerSpec : Spek({
 
                 // assert JSON
                 val expectedJson = """
-                    {"payload":[
+                    {"payload":{"events":[
                         {"creator":"test","id":"4778a3ef-a920-4323-bc34-b87aa0bffb41","type":"SimpleEvent","timestamp":1509618174218},
                         {"creator":"test","id":"bed6a10c-ab5a-48bc-9129-60842fe10fd9","type":"PayloadEvent","timestamp":1509618174218},
                         ],
@@ -93,7 +93,7 @@ object ControllerSpec : Spek({
                         "more" : true,
                         "size" : 2,
                         "lastId" : "bed6a10c-ab5a-48bc-9129-60842fe10fd9"}
-                    }
+                    }}
 """
                 val actualAsMap = JsonToMap.jsonToMap(response.jsonObject)
                 val expectedAsMap = JsonToMap.jsonToMap(JSONObject(expectedJson))
