@@ -31,7 +31,7 @@ class Controller constructor(dao: EventDao) {
 
     private fun buildPaging(events: List<Event>, filter: Filter): Map<String, Any> {
         val lastId = events.get(events.size - 1).id.toString()
-        val more = if (filter.pageSize != null) (events.size == filter.pageSize as Int) else false
+        val more = if (filter.pageSize != null) (events.size == filter.pageSize) else false
         return mapOf("size" to events.size, "more" to more, "lastId" to lastId)
     }
 }

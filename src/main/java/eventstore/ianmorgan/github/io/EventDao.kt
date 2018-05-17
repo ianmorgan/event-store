@@ -58,7 +58,7 @@ class EventDao {
                         .filter { it -> matchesFilter(it, filter) }
 
                     if (filter.pageSize != null){
-                        return filtered.take(filter.pageSize as Int)
+                        return filtered.take(filter.pageSize)
                     }
                     else {
                         return filtered
@@ -69,7 +69,7 @@ class EventDao {
         } else {
             val filtered = this.events.filter { it -> matchesFilter(it, filter) }
             if (filter.pageSize != null){
-                return filtered.take(filter.pageSize as Int)
+                return filtered.take(filter.pageSize)
             }
             else {
                 return filtered
@@ -90,7 +90,7 @@ class EventDao {
 
 data class Filter(
     val type: String? = null,  // Comma separated list of event types (the 'type' key) to filter on
-    val pageSize: Integer? = null,
+    val pageSize: Int? = null,
     val lastId: UUID? = null,  // Typically combined with the 'pageSize' to retrieve from a position within the event stream. Note that this exclusive, i.e. the query will return the matching events directly after this event id
     val aggregateId: String? = null,
     val sessionId: String? = null
@@ -118,8 +118,8 @@ data class Filter(
             )
         }
 
-        private fun safeToInteger(value: String?): Integer? {
-            return if (value != null) Integer.parseInt(value) as Integer else null
+        private fun safeToInteger(value: String?): Int? {
+            return if (value != null) Integer.parseInt(value) else null
         }
 
         private fun safeToUUID(value: String?): UUID? {
