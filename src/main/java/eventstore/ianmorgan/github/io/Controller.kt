@@ -24,6 +24,7 @@ class Controller constructor(dao: EventDao) {
             }
 
             ApiBuilder.post("/events") { ctx ->
+
                 println(ctx.body())
             }
         }

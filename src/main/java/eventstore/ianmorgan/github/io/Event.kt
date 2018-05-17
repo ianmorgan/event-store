@@ -1,5 +1,6 @@
 package eventstore.ianmorgan.github.io
 
+import eventstore.ianmorgan.github.io.utils.JsonHelper
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.HashMap
@@ -41,8 +42,7 @@ data class Event(
             val timestamp = json.get("timestamp") as Long
             val aggregateId = if (json.has("aggregateId")) json.getString("aggregateId") else null
             val sessionId = if (json.has("sessionId")) json.getString("sessionId") else null
-
-            // todo - that annoying extraction of the underlying map in JSONObject
+            val payload = if (json.has("payload")) JsonHelper.jsonToMap(json.getJSONObject("payload")) else null
 
 
             return Event(id = id,
@@ -50,7 +50,8 @@ data class Event(
                 creator = creator,
                 timestamp = timestamp,
                 aggregateId = aggregateId,
-                sessionId = sessionId)
+                sessionId = sessionId,
+                payload = payload)
         }
     }
 

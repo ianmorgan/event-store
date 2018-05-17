@@ -65,7 +65,7 @@ object EventDaoSpec : Spek({
         }
 
         it ("should limit results by pageSize") {
-            val filtered = dao.retrieve(Filter (pageSize = 2 as Integer))
+            val filtered = dao.retrieve(Filter (pageSize = 2))
 
             assert.that(filtered.size, equalTo(2))
             assert.that(filtered[0].type, equalTo("SimpleEvent"))
