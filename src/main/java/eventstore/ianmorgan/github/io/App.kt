@@ -1,16 +1,31 @@
 package eventstore.ianmorgan.github.io
 
 import io.javalin.Javalin
-import io.javalin.ApiBuilder.*
+import org.apache.commons.cli.Options
+import org.apache.commons.cli.CommandLine
+import org.apache.commons.cli.DefaultParser
+
+
 
 
 fun main(args: Array<String>) {
-    JavalinApp(7000).init()
+
+    // Setup common command line options
+    val options = Options()
+    options.addOption("h", false, "display a help message")
+    val parser = DefaultParser()
+    val cmd = parser.parse(options, args)
+
+    JavalinApp(7000, cmd).init()
 }
 
-class JavalinApp(private val port: Int) {
+class JavalinApp(private val port: Int, private val cmd : CommandLine) {
 
     fun init(): Javalin {
+
+        if(cmd.hasOption("h")) {
+            println ("help message")
+        }
 
 
         val app = Javalin.create().apply {
