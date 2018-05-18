@@ -4,6 +4,8 @@ import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
 import eventstore.ianmorgan.github.io.utils.JsonHelper
 import io.javalin.Javalin
+import org.apache.commons.cli.DefaultParser
+import org.apache.commons.cli.Options
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.describe
@@ -21,7 +23,10 @@ object ControllerSpec : Spek({
 
     describe(" controller") {
         beforeGroup {
-            app = JavalinApp(8000).init()
+
+            val parser = DefaultParser()
+            val cmd = parser.parse(Options(), arrayOf<String>())
+            app = JavalinApp(8000, cmd).init()
             println("app started...")
         }
 
@@ -121,7 +126,7 @@ object ControllerSpec : Spek({
             }
         }
 
-        context( "POST /events specs") {
+        context("POST /events specs") {
             it("should save new events ") {
 
                 val url = baseUrl + "events"
