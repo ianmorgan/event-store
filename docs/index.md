@@ -1,7 +1,7 @@
 ## About
 
 This is a basic event store that should be sufficient for many event sourcing scenarios. Events are stored and retrieved 
-using a simple REST style API. It will also support a simple subscription style push model.
+using a simple REST style API. It will also support a simple subscription style push model,
  when I get around to it.
  
 ## Event Types 
@@ -28,7 +28,7 @@ Normally additional fields are added. The following can be combined as necessary
 
 ### PayloadEvent 
 
-This include the 'payload' key which holds any additional data captured with the event. 
+This includes the 'payload' key, which holds any additional data captured with the event. 
 
 ```json
 {
