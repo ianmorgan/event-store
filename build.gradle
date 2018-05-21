@@ -5,11 +5,9 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        //classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
 
         // for Spec - http://spekframework.org/docs/latest/
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
-
     }
 
 }
@@ -49,28 +47,18 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     compile "io.javalin:javalin:1.6.1"
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
-
-    compile group: 'org.json', name: 'json', version: '20180130'
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
 
     compile "ianmorgan:json-utils:0.0.7"
 
-    //testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 
-    //testCompile 'org.jetbrains.spek:spek-api:1.1.5'
-    //testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
     testCompile group: 'com.natpryce', name: 'hamkrest', version: '1.4.2.2'
-
-
     testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
     testCompile ('org.jetbrains.spek:spek-api:1.1.5') {
@@ -81,8 +69,6 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
 
-    //org.jetbrains.spek:spek-api:1.1.5
-    //org.jetbrains.spek:spek-junit-platform-engine:1.1.5
     testCompile ('org.junit.platform:junit-platform-runner:1.0.0')
 
     testCompile 'khttp:khttp:0.1.0'
@@ -102,7 +88,6 @@ compileTestKotlin {
         jvmTarget = "1.8"
     }
 }
-
 
 jar {
     manifest {
