@@ -2,7 +2,7 @@ package eventstore.ianmorgan.github.io
 
 import com.natpryce.hamkrest.assertion.assert
 import com.natpryce.hamkrest.equalTo
-import eventstore.ianmorgan.github.io.utils.JsonHelper
+import ianmorgan.github.io.jsonUtils.JsonHelper
 import io.javalin.Javalin
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.Options

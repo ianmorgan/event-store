@@ -1,6 +1,6 @@
 package eventstore.ianmorgan.github.io
 
-import eventstore.ianmorgan.github.io.utils.JsonHelper
+import ianmorgan.github.io.jsonUtils.JsonHelper
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.HashMap
