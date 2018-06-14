@@ -9,6 +9,12 @@ class Controller constructor(dao: EventDao) {
 
     fun register(app: Javalin) {
         app.routes {
+
+//            ApiBuilder.get ("/status") {
+//                println ("in status")
+//                it.result("Running!")
+//            }
+
             ApiBuilder.get("/events") { ctx ->
 
                 // run the query

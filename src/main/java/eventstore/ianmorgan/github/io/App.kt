@@ -15,8 +15,8 @@ fun main(args: Array<String>) {
     options.addOption("h", false, "display a help message")
     val parser = DefaultParser()
     val cmd = parser.parse(options, args)
-
-    JavalinApp(7000, cmd).init()
+    println ("about to start event store")
+    JavalinApp(7001, cmd).init()
 }
 
 class JavalinApp(private val port: Int, private val cmd : CommandLine) {
