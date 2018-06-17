@@ -58,7 +58,7 @@ dependencies {
 
     //compile "ianmorgan:json-utils:0.0.7"
 
-    implementation 'com.github.ianmorgan:json-utils:cfade3eb55'
+    implementation 'com.github.ianmorgan:json-utils:e772fbc'
 
 
 

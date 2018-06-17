@@ -50,8 +50,8 @@ object ControllerSpec : Spek({
                     ]}}
 """
                 val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)
-                val expectedAsMap = JsonHelper.jsonToMap(JSONObject(expectedJson))
-                assert.that(expectedAsMap, equalTo(actualAsMap))
+                val expectedAsMap = JsonHelper.jsonToMap(expectedJson)
+                assert.that(actualAsMap,  equalTo(expectedAsMap))
             }
 
             it("should filter by type") {
@@ -65,8 +65,8 @@ object ControllerSpec : Spek({
                     ]}}
 """
                 val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)
-                val expectedAsMap = JsonHelper.jsonToMap(JSONObject(expectedJson))
-                assert.that(expectedAsMap, equalTo(actualAsMap))
+                val expectedAsMap = JsonHelper.jsonToMap(expectedJson)
+                assert.that(actualAsMap, equalTo(expectedAsMap))
             }
 
             it("should filter by aggregateId") {
@@ -80,8 +80,8 @@ object ControllerSpec : Spek({
                     ]}}
 """
                 val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)
-                val expectedAsMap = JsonHelper.jsonToMap(JSONObject(expectedJson))
-                assert.that(expectedAsMap, equalTo(actualAsMap))
+                val expectedAsMap = JsonHelper.jsonToMap(expectedJson)
+                assert.that(actualAsMap, equalTo(expectedAsMap))
             }
 
             it("should limit results by pageSize") {
@@ -101,8 +101,8 @@ object ControllerSpec : Spek({
                     }}
 """
                 val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)
-                val expectedAsMap = JsonHelper.jsonToMap(JSONObject(expectedJson))
-                assert.that(expectedAsMap, equalTo(actualAsMap))
+                val expectedAsMap = JsonHelper.jsonToMap(expectedJson)
+                assert.that(actualAsMap, equalTo(expectedAsMap))
             }
 
             it("should use lastId to determine offset") {
@@ -121,8 +121,8 @@ object ControllerSpec : Spek({
                     }}
 """
                 val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)
-                val expectedAsMap = JsonHelper.jsonToMap(JSONObject(expectedJson))
-                assert.that(expectedAsMap, equalTo(actualAsMap))
+                val expectedAsMap = JsonHelper.jsonToMap(expectedJson)
+                assert.that(actualAsMap, equalTo(expectedAsMap))
             }
         }
 
@@ -150,6 +150,23 @@ object ControllerSpec : Spek({
                 assert.that(readCount, equalTo(1))
             }
 
+        }
+
+        context("GET /aggregates specs") {
+            beforeEachTest {}
+
+            it("should return all aggregates") {
+                val response = khttp.get(url = baseUrl + "aggregates")
+                assert.that(response.statusCode, equalTo(200))
+
+                val expectedJson = """
+                    {"payload":{"aggregates":["123"]}}
+
+"""
+                val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)
+                val expectedAsMap = JsonHelper.jsonToMap(expectedJson)
+                assert.that(actualAsMap, equalTo(expectedAsMap))
+            }
         }
 
 

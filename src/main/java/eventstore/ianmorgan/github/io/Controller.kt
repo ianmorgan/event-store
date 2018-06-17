@@ -30,6 +30,29 @@ class Controller constructor(dao: EventDao) {
                 ctx.json(mapOf("payload" to result))
             }
 
+
+            // TODO - this is a tempporary work aorund
+            //        to support the find functionality in the doc-store
+            //        and needs to be replaced by a better indexer
+            ApiBuilder.get("/aggregates") { ctx ->
+
+                // run the query
+                val filter = Filter()
+                val events = theDao.retrieve(filter)
+
+                // build the result
+                val aggregates = HashSet<String>()
+                for (ev in events){
+                    if (ev.aggregateId != null){
+                        aggregates.add(ev.aggregateId)
+                    }
+                }
+
+                val result = HashMap<String, Any>()
+                result["aggregates"] = aggregates
+                ctx.json(mapOf("payload" to result))
+            }
+
             ApiBuilder.post("/events") { ctx ->
                 val json = JSONArray(ctx.body())
 
