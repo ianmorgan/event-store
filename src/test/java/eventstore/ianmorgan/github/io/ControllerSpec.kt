@@ -155,12 +155,25 @@ object ControllerSpec : Spek({
         context("GET /aggregates specs") {
             beforeEachTest {}
 
-            it("should return all aggregates") {
+            it("should return all aggregates unfiltered") {
                 val response = khttp.get(url = baseUrl + "aggregates")
                 assert.that(response.statusCode, equalTo(200))
 
                 val expectedJson = """
                     {"payload":{"aggregates":["123"]}}
+
+"""
+                val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)
+                val expectedAsMap = JsonHelper.jsonToMap(expectedJson)
+                assert.that(actualAsMap, equalTo(expectedAsMap))
+            }
+
+            it("should return all aggregates filtered by EventType") {
+                val response = khttp.get(url = baseUrl + "aggregates?type=XXX")
+                assert.that(response.statusCode, equalTo(200))
+
+                val expectedJson = """
+                    {"payload":{"aggregates":[]}}
 
 """
                 val actualAsMap = JsonHelper.jsonToMap(response.jsonObject)

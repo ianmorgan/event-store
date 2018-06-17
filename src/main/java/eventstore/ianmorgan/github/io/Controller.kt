@@ -37,7 +37,7 @@ class Controller constructor(dao: EventDao) {
             ApiBuilder.get("/aggregates") { ctx ->
 
                 // run the query
-                val filter = Filter()
+                val filter = Filter.ModelMapper.fromQueryMap(ctx.queryParamMap())
                 val events = theDao.retrieve(filter)
 
                 // build the result
